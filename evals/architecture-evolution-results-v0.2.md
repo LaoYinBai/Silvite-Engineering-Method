@@ -34,3 +34,19 @@
 
 本轮输入提供了真实使用经验的归纳，包括版本身份、跨仓语义同步、信息暴露、命令行为安全、迁移切片和恢复存档等缺口。这些经验足以支持创建候选规则和评测场景，但不等于独立前向测试结果。
 
+## 静态覆盖复核
+
+以下检查只证明候选规则可以从 Skill 入口定位，不证明 Agent 会在压力下执行：
+
+| 场景 | 核心入口 | 详细规则 | 静态状态 |
+|---|---|---|---|
+| AE01 | 发布身份门禁 | `compatibility-and-versioning.md`、`release-evidence-gates.md` | 已覆盖 |
+| AE02 | 兼容与发布 | `cross-platform-and-editions.md` | 已覆盖 |
+| AE03 | 基线与不变量 | `baseline-and-invariants.md` 信息暴露矩阵 | 已覆盖 |
+| AE04 | 基线/现状 | `architecture-audit.md` 状态与能力所有权 | 已覆盖 |
+| AE05 | 特殊风险路由 | `hermetic-toolchains.md` | 已覆盖 |
+| AE06 | 特殊风险路由 | `command-security-gate.md` | 已覆盖 |
+| AE07 | 退役或停工 | `migration-slicing.md` 停工与恢复记录 | 已覆盖 |
+| AE08 | 分类与范围 | `cross-platform-and-editions.md` 排除范围证明 | 已覆盖 |
+
+静态复核状态：`Completed`。独立行为验证状态仍为：`Unverified`。
