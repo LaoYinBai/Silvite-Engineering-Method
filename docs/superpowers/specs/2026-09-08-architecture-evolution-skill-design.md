@@ -20,7 +20,7 @@ In scope:
 
 Out of scope:
 
-- No MoDi or other product source code changes.
+- No product source code changes.
 - No rewrite of the three existing Git commits or their historical authors.
 - No executable migration tooling or product-specific configuration.
 - No project names, private endpoints, credentials, signing material, or internal implementation parameters.
@@ -127,7 +127,7 @@ RED runs receive only raw scenarios and the existing general Skill. GREEN runs r
 
 ## Documentation and Ownership
 
-Update the root README to describe the two-Skill model, triggers, installation, structure, evaluation approach, and experimental status. Replace the stale `DSGYDS` clone URL with `LaoYinBai` and ensure repository-visible owner references are consistent.
+Update the root README to describe the two-Skill model, triggers, installation, structure, evaluation approach, and experimental status. Replace the stale clone owner with `LaoYinBai` and ensure repository-visible owner references are consistent.
 
 Set repository-local `user.name` to `LaoYinBai` for new commits. Preserve existing commit history and authors because rewriting published history would be destructive and is not required for repository-visible consistency going forward.
 

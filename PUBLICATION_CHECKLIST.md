@@ -6,7 +6,7 @@
 - **REVIEW NEEDED**：公开性无法由现有信息判断，必须由维护者确认；存在此状态时不得发布。
 - **REMOVED**：已从公开内容删除，仅记录类别，不复述敏感事实。
 
-## v0.1.0 文件状态
+## v0.2.0 文件状态
 
 | 文件或目录 | 状态 | 说明 |
 |---|---|---|
@@ -18,6 +18,11 @@
 | `UPDATE_GUIDE.md` | SAFE | 只包含更新流程和脱敏模板。 |
 | `references/` | SAFE | 使用通用系统示例，不含项目专有实现。 |
 | `evals/` | SAFE | 场景均为合成、匿名、跨项目压力测试；结果只保留脱敏聚合。 |
+| `silvite-architecture-evolution/SKILL.md` | SAFE | 只包含通用架构迁移阶段、门禁、状态和公开路由。 |
+| `silvite-architecture-evolution/agents/openai.yaml` | SAFE | 只包含名称、简述和默认调用提示。 |
+| `silvite-architecture-evolution/references/` | SAFE | 使用通用版本、平台、edition、工具链和安全边界，不含项目专有参数。 |
+| `evals/architecture-evolution-*` | SAFE | 合成压力场景不含真实仓库、服务、凭据或内部项目名称；未运行结果明确标记 Unverified。 |
+| `docs/superpowers/` | SAFE | 设计与实施计划只记录公开方法、文件结构、验证和发布步骤。 |
 | License | SAFE | 远端仓库维护者已选择并提交 MIT License；公开内容保持一致。 |
 
 ## 敏感类别检查
@@ -35,6 +40,8 @@
 | 公司主体、股权、法律、谈判或竞争方案 | SAFE |
 | 可能增加攻击面的实现细节 | SAFE |
 | 只对某个内部项目有意义的事实 | SAFE |
+| 架构迁移中的真实仓库、服务或产品名称 | SAFE |
+| 凭据复原方法、真实 Token 或私有接口细节 | SAFE |
 
 ## 主动排除记录
 

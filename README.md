@@ -10,7 +10,10 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 > 让 Agent 写得更快之前，先让它知道：**要做什么、哪里不能碰、什么才算完成。**
 
-**Silvite Engineering Method** 是一套面向 AI Coding Agent 的可复用软件工程 Skill。
+**Silvite Engineering Method** 是一套面向 AI Coding Agent 的可复用软件工程 Skill 组合：
+
+- `silvite-engineering-method`：通用工程治理，负责目标、范围、权限、可逆性、复杂度和证据。
+- `silvite-architecture-evolution`：大型架构演进，负责冻结基线、行为不变量、迁移切片、兼容窗口和发布门禁。
 
 它不教 Agent 某一种语言，也不规定某一种架构。
 
@@ -30,6 +33,8 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 而是让 Agent 在拥有高吞吐执行能力以后，仍然保持：
 
 **边界、判断、证据与可逆性。**
+
+大型重构同时使用两个 Skill。第二个 Skill 不替代第一个，也不把所有日常修改升级成重型迁移流程。
 
 ---
 
@@ -542,6 +547,17 @@ Agent with Skill
 - 💾 高风险数据迁移
 - 🩹 Workaround 被要求包装成最终修复
 
+架构演进候选评测另外覆盖：
+
+- 同 ProductVersion 仅增加 Build 导致更新不可发现
+- 多仓库、平台和 edition 的语义同步冲突
+- 内部 Build/Commit 泄露到普通 UI
+- Discovery 隐式触发 Connecting
+- 系统工具污染随包密闭工具链
+- 凭据复原与二进制下载形成高风险行为链
+- 长任务中断后缺少可恢复进度点
+- 明确排除的仓库被共享生成器误修改
+
 早期 Eval 曾经出现过一个很重要的结果：
 
 **Skill 本身也会犯错。**
@@ -558,21 +574,33 @@ Agent with Skill
 
 - [`evals/scenarios.md`](evals/scenarios.md)
 - [`evals/results-v0.1.md`](evals/results-v0.1.md)
+- [`evals/architecture-evolution-scenarios.md`](evals/architecture-evolution-scenarios.md)
+- [`evals/architecture-evolution-results-v0.2.md`](evals/architecture-evolution-results-v0.2.md)
+
+架构演进场景已完成设计；本轮没有运行独立 Agent 的 RED/GREEN 前向测试，因此其行为验证状态明确为 `Unverified`。
 
 ---
 
 ## 🛠️ 安装
 
-将整个仓库克隆到 Agent 宿主支持的 Skills 目录。
+先克隆仓库：
 
 例如：
 
 ```bash
-git clone https://github.com/DSGYDS/Silvite-Engineering-Method.git \
-  ~/.agents/skills/silvite-engineering-method
+git clone https://github.com/LaoYinBai/Silvite-Engineering-Method.git
 ```
 
-如果你的 Agent 使用其他 Skill 路径，请按照对应宿主的规则放置。
+再把两个 Skill 分别放入宿主支持的 Skills 目录。以 `~/.agents/skills` 为例：
+
+```bash
+mkdir -p ~/.agents/skills/silvite-engineering-method
+cp SKILL.md ~/.agents/skills/silvite-engineering-method/
+cp -R references ~/.agents/skills/silvite-engineering-method/
+cp -R silvite-architecture-evolution ~/.agents/skills/
+```
+
+如果只需要通用工程治理，安装第一个即可。进行大型架构迁移时安装并同时加载两者。如果宿主使用其他 Skill 路径，请按对应规则放置。
 
 安装后可以显式调用：
 
@@ -581,6 +609,15 @@ git clone https://github.com/DSGYDS/Silvite-Engineering-Method.git \
 
 先明确目标、修改边界、失败模式、验证方式和回滚路径，
 再开始实现。
+```
+
+大型架构迁移可以这样调用：
+
+```text
+同时使用 $silvite-engineering-method 和 $silvite-architecture-evolution。
+
+先冻结 Known-Good、行为不变量和回滚点，建立迁移台账，
+再按依赖顺序逐切片迁移，并分别报告代码、测试、产物、发布和升级状态。
 ```
 
 支持自动 Skill Discovery 的 Agent，也可以根据 `SKILL.md` 中的描述自动触发。
@@ -609,10 +646,26 @@ Silvite-Engineering-Method/
 │   ├── project-driven-learning.md
 │   └── anti-patterns.md
 │
+├── silvite-architecture-evolution/
+│   ├── SKILL.md
+│   ├── agents/
+│   │   └── openai.yaml
+│   └── references/
+│       ├── baseline-and-invariants.md
+│       ├── architecture-audit.md
+│       ├── migration-slicing.md
+│       ├── compatibility-and-versioning.md
+│       ├── cross-platform-and-editions.md
+│       ├── release-evidence-gates.md
+│       ├── hermetic-toolchains.md
+│       └── command-security-gate.md
+│
 └── evals/
     ├── README.md
     ├── scenarios.md
-    └── results-v0.1.md
+    ├── results-v0.1.md
+    ├── architecture-evolution-scenarios.md
+    └── architecture-evolution-results-v0.2.md
 ```
 
 ### `SKILL.md`
@@ -631,6 +684,10 @@ Silvite-Engineering-Method/
 - Debug 与恢复
 - 项目驱动学习
 - 常见反模式
+
+### `silvite-architecture-evolution/`
+
+独立可安装的互补 Skill。核心 `SKILL.md` 只保留阶段与门禁，详细迁移检查表放在一级 `references/`，避免扩写通用 Skill。
 
 ### `evals/`
 
@@ -751,7 +808,7 @@ Silvite Engineering Method：
 
 ## 🧭 当前状态
 
-### `v0.1.0 — Usable, Experimental`
+### `v0.2.0 — Usable, Experimental`
 
 当前版本已经完成：
 
@@ -761,6 +818,10 @@ Silvite Engineering Method：
 - ✅ 第一轮 RED → GREEN 行为校准
 - ✅ 公开安全检查
 - ✅ 持续更新机制
+- ✅ 通用治理与架构演进职责拆分
+- ✅ 大型迁移的基线、不变量、切片和兼容门禁
+- ✅ 发布身份、信息暴露、密闭工具链和命令行为安全规则
+- ✅ 8 个架构演进压力场景与评分标准
 
 但它仍然缺少足够多的：
 
@@ -769,6 +830,7 @@ Silvite Engineering Method：
 - 🧰 不同技术栈
 - 🕒 长期维护样本
 - 💥 真实故障与反例
+- 🧪 新 Skill 的独立 RED → GREEN 前向测试
 
 因此，在达到 `v1.0` 之前：
 

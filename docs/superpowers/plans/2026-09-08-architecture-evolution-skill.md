@@ -17,7 +17,7 @@
 - Keep all new Skill references exactly one level below `SKILL.md`.
 - Do not add README or CHANGELOG files inside `silvite-architecture-evolution/`.
 - Do not modify any product source repository or access production systems, credentials, signing material, or private endpoints.
-- Use only generalized, public-safe engineering rules; do not name MoDi, Gitee, or private repositories in runtime Skill content or evaluations.
+- Use only generalized, public-safe engineering rules; do not name private products, repository services, or private repositories in runtime Skill content or evaluations.
 - Normalize repository-visible GitHub ownership to `LaoYinBai`; preserve existing published commit authors.
 - Do not claim a later evidence state from an earlier one.
 

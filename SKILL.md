@@ -44,6 +44,10 @@ description: Use when planning or executing non-trivial software work with multi
 
 详见 [complexity-control.md](references/complexity-control.md)。
 
+## 互补 Skill 路由
+
+当任务涉及多阶段底层替换、协议演进、跨平台统一、多 edition/多仓库兼容或发布迁移时，同时使用 `silvite-architecture-evolution`。本 Skill 继续负责通用工程治理；迁移基线、不变量、切片台账、兼容窗口和发布身份门禁由互补 Skill 负责。
+
 ## 常见反模式
 
 - 把“现代化”“重构好”当作验收标准。
