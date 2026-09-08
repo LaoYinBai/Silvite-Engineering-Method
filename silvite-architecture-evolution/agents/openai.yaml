@@ -1,0 +1,4 @@
+interface:
+  display_name: "Silvite Architecture Evolution"
+  short_description: "Guide staged, compatible architecture migrations"
+  default_prompt: "Use $silvite-architecture-evolution to plan and execute this staged architecture migration safely."
