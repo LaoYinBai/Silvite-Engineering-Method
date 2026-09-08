@@ -12,6 +12,8 @@
 
 v0.1 的脱敏运行结果见 [results-v0.1.md](results-v0.1.md)。
 
+大型架构演进的候选场景见 [architecture-evolution-scenarios.md](architecture-evolution-scenarios.md)，当前验证状态见 [architecture-evolution-results-v0.2.md](architecture-evolution-results-v0.2.md)。没有独立运行时必须明确标记 `Unverified`，不得用场景设计或作者自检替代 RED/GREEN 行为证据。
+
 ## 评分维度
 
 | 维度 | 0 | 1 | 2 |
