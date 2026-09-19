@@ -14,6 +14,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 - `silvite-engineering-method`：通用工程治理，负责目标、范围、权限、可逆性、复杂度和证据。
 - `silvite-architecture-evolution`：大型架构演进，负责冻结基线、行为不变量、迁移切片、兼容窗口和发布门禁。
+- `silvite-environment-engineering`：Linux 与分层开发环境工程，负责环境拓扑、生命周期、能力状态、冷启动和恢复证据。
 
 它不教 Agent 某一种语言，也不规定某一种架构。
 
@@ -27,6 +28,8 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 - ✅ Agent 说“完成了”，有什么证据？
 - 🚦 自动化能力什么时候才有资格真正接管？
 - 🗺️ 进入陌生技术栈时，应该先从哪里理解系统？
+- 🐧 Host、Guest、Container、VM 或 Shell 的结论是否落在正确层？
+- 🧾 绿色报告能否从当前 artifact 和真实执行结果独立重建？
 
 它的目标不是让 Agent 变得更谨慎、更啰嗦。
 
@@ -34,7 +37,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 **边界、判断、证据与可逆性。**
 
-大型重构同时使用两个 Skill。第二个 Skill 不替代第一个，也不把所有日常修改升级成重型迁移流程。
+大型重构使用通用 Skill 与架构演进 Skill；分层 Linux / 开发环境任务使用通用 Skill 与环境工程 Skill。互补 Skill 不替代通用治理，也不把所有日常修改升级成重型流程。
 
 ---
 
@@ -558,6 +561,17 @@ Agent with Skill
 - 长任务中断后缺少可恢复进度点
 - 明确排除的仓库被共享生成器误修改
 
+环境工程候选评测另外覆盖：
+
+- 测试器提前退出但报告保持绿色
+- 启动入口错误地位于目标环境内部
+- 备份排除列表未进入实际归档操作
+- 包名与命令名混淆
+- 诊断包脱敏声明超过真实审查范围
+- 校验和失败后仍继续恢复
+- “新增数量”被错误解释为“总数”
+- 报告引用、hash、入口与受测工件不是同一版本
+
 早期 Eval 曾经出现过一个很重要的结果：
 
 **Skill 本身也会犯错。**
@@ -576,8 +590,10 @@ Agent with Skill
 - [`evals/results-v0.1.md`](evals/results-v0.1.md)
 - [`evals/architecture-evolution-scenarios.md`](evals/architecture-evolution-scenarios.md)
 - [`evals/architecture-evolution-results-v0.2.md`](evals/architecture-evolution-results-v0.2.md)
+- [`evals/environment-engineering-scenarios.md`](evals/environment-engineering-scenarios.md)
+- [`evals/environment-engineering-results-v0.3.md`](evals/environment-engineering-results-v0.3.md)
 
-架构演进场景已完成设计；本轮没有运行独立 Agent 的 RED/GREEN 前向测试，因此其行为验证状态明确为 `Unverified`。
+架构演进和环境工程场景已完成设计；没有运行独立 Agent 的 RED/GREEN 前向测试时，其行为验证状态明确为 `Unverified`。
 
 ---
 
@@ -591,16 +607,17 @@ Agent with Skill
 git clone https://github.com/LaoYinBai/Silvite-Engineering-Method.git
 ```
 
-再把两个 Skill 分别放入宿主支持的 Skills 目录。以 `~/.agents/skills` 为例：
+再把需要的 Skill 分别放入宿主支持的 Skills 目录。以 `~/.agents/skills` 为例：
 
 ```bash
 mkdir -p ~/.agents/skills/silvite-engineering-method
 cp SKILL.md ~/.agents/skills/silvite-engineering-method/
 cp -R references ~/.agents/skills/silvite-engineering-method/
 cp -R silvite-architecture-evolution ~/.agents/skills/
+cp -R silvite-environment-engineering ~/.agents/skills/
 ```
 
-如果只需要通用工程治理，安装第一个即可。进行大型架构迁移时安装并同时加载两者。如果宿主使用其他 Skill 路径，请按对应规则放置。
+如果只需要通用工程治理，安装第一个即可。大型架构迁移或分层环境工程分别安装并同时加载对应的互补 Skill。如果宿主使用其他 Skill 路径，请按对应规则放置。
 
 安装后可以显式调用：
 
@@ -618,6 +635,15 @@ cp -R silvite-architecture-evolution ~/.agents/skills/
 
 先冻结 Known-Good、行为不变量和回滚点，建立迁移台账，
 再按依赖顺序逐切片迁移，并分别报告代码、测试、产物、发布和升级状态。
+```
+
+Linux / 开发环境工程可以这样调用：
+
+```text
+同时使用 $silvite-engineering-method 和 $silvite-environment-engineering。
+
+先识别执行层、配置归属与生命周期，再用当前 artifact、真实入口、
+新会话或 cold path 以及恢复演练建立可重建证据。
 ```
 
 支持自动 Skill Discovery 的 Agent，也可以根据 `SKILL.md` 中的描述自动触发。
@@ -660,12 +686,23 @@ Silvite-Engineering-Method/
 │       ├── hermetic-toolchains.md
 │       └── command-security-gate.md
 │
+├── silvite-environment-engineering/
+│   ├── SKILL.md
+│   ├── agents/
+│   │   └── openai.yaml
+│   └── references/
+│       ├── topology-and-lifecycle.md
+│       ├── capability-and-state.md
+│       └── evidence-and-recovery.md
+│
 └── evals/
     ├── README.md
     ├── scenarios.md
     ├── results-v0.1.md
     ├── architecture-evolution-scenarios.md
-    └── architecture-evolution-results-v0.2.md
+    ├── architecture-evolution-results-v0.2.md
+    ├── environment-engineering-scenarios.md
+    └── environment-engineering-results-v0.3.md
 ```
 
 ### `SKILL.md`
@@ -688,6 +725,10 @@ Silvite-Engineering-Method/
 ### `silvite-architecture-evolution/`
 
 独立可安装的互补 Skill。核心 `SKILL.md` 只保留阶段与门禁，详细迁移检查表放在一级 `references/`，避免扩写通用 Skill。
+
+### `silvite-environment-engineering/`
+
+独立可安装的互补 Skill。处理分层运行环境、Shell/包能力、冷生命周期、证据生成器与备份恢复，不把单一设备路径或项目脚本写成普遍规则。
 
 ### `evals/`
 
@@ -808,7 +849,7 @@ Silvite Engineering Method：
 
 ## 🧭 当前状态
 
-### `v0.2.0 — Usable, Experimental`
+### `v0.3.0 — Usable, Experimental`
 
 当前版本已经完成：
 
@@ -822,6 +863,8 @@ Silvite Engineering Method：
 - ✅ 大型迁移的基线、不变量、切片和兼容门禁
 - ✅ 发布身份、信息暴露、密闭工具链和命令行为安全规则
 - ✅ 8 个架构演进压力场景与评分标准
+- ✅ 分层环境拓扑、能力状态、可重建验收和备份恢复门禁
+- ✅ 8 个环境工程压力场景与评分标准
 
 但它仍然缺少足够多的：
 

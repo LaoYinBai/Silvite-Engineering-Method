@@ -6,7 +6,7 @@
 - **REVIEW NEEDED**：公开性无法由现有信息判断，必须由维护者确认；存在此状态时不得发布。
 - **REMOVED**：已从公开内容删除，仅记录类别，不复述敏感事实。
 
-## v0.2.0 文件状态
+## v0.3.0 文件状态
 
 | 文件或目录 | 状态 | 说明 |
 |---|---|---|
@@ -22,6 +22,8 @@
 | `silvite-architecture-evolution/agents/openai.yaml` | SAFE | 只包含名称、简述和默认调用提示。 |
 | `silvite-architecture-evolution/references/` | SAFE | 使用通用版本、平台、edition、工具链和安全边界，不含项目专有参数。 |
 | `evals/architecture-evolution-*` | SAFE | 合成压力场景不含真实仓库、服务、凭据或内部项目名称；未运行结果明确标记 Unverified。 |
+| `silvite-environment-engineering/` | SAFE | 只包含通用环境拓扑、生命周期、能力状态、证据和恢复门禁；未保留设备或账户路径。 |
+| `evals/environment-engineering-*` | SAFE | 场景由现场失败去实例化生成；不含真实设备、产品、用户或私有文件名，结果标记 Unverified。 |
 | `docs/superpowers/` | SAFE | 设计与实施计划只记录公开方法、文件结构、验证和发布步骤。 |
 | License | SAFE | 远端仓库维护者已选择并提交 MIT License；公开内容保持一致。 |
 
@@ -42,6 +44,7 @@
 | 只对某个内部项目有意义的事实 | SAFE |
 | 架构迁移中的真实仓库、服务或产品名称 | SAFE |
 | 凭据复原方法、真实 Token 或私有接口细节 | SAFE |
+| 真实设备路径、账户目录、工具版本或诊断内容 | SAFE |
 
 ## 主动排除记录
 
@@ -51,6 +54,8 @@
 | 项目名称、时间线和专有功能 | REMOVED | 改写为通用客户端、插件、网络或跨平台系统。 |
 | 具体协议字段、链路组合和实现参数 | REMOVED | 只保留分层、版本、边界和复杂度原则。 |
 | 公司、商业、组织和治理推演 | REMOVED | 不进入公开工程 Skill。 |
+| 现场设备、Host/Guest 绝对路径与特定脚本名 | REMOVED | 只保留环境所有权、生命周期和入口归属规则。 |
+| 未经原始日志复现的成功结论与冲突案例 | REMOVED | 不进入 Skill；仅将可机器验证的失败抽象为 Eval。 |
 
 ## REVIEW NEEDED
 

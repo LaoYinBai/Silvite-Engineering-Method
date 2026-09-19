@@ -48,6 +48,8 @@ description: Use when planning or executing non-trivial software work with multi
 
 当任务涉及多阶段底层替换、协议演进、跨平台统一、多 edition/多仓库兼容或发布迁移时，同时使用 `silvite-architecture-evolution`。本 Skill 继续负责通用工程治理；迁移基线、不变量、切片台账、兼容窗口和发布身份门禁由互补 Skill 负责。
 
+当任务涉及 Linux 开发环境初始化、Host/Guest/Container/VM/WSL/远程会话边界、Shell/PATH/包能力、冷启动、诊断包或备份恢复时，同时使用 `silvite-environment-engineering`。本 Skill 继续负责通用工程治理；环境拓扑、生命周期、能力状态与恢复证据门禁由互补 Skill 负责。
+
 ## 常见反模式
 
 - 把“现代化”“重构好”当作验收标准。
