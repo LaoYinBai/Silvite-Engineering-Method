@@ -30,6 +30,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 - 🗺️ 进入陌生技术栈时，应该先从哪里理解系统？
 - 🐧 Host、Guest、Container、VM 或 Shell 的结论是否落在正确层？
 - 🧾 绿色报告能否从当前 artifact 和真实执行结果独立重建？
+- 🧰 用户还没有收到成果时，Agent 是否先跑去建设工具和基础设施？
 
 它的目标不是让 Agent 变得更谨慎、更啰嗦。
 
@@ -253,6 +254,8 @@ Silvite Engineering Method 将任务状态明确区分为：
 有时候：
 
 > **保留少量清晰的重复，比建立错误的统一更便宜。**
+
+通用 Skill 另设 [Direct Execution Before Tooling](SKILL.md)：少量、一次性且低风险的工作默认直接完成。出现工具和治理文件持续增加、正式交付物仍为零时，触发 `ZERO-DELIVERABLE WARNING`，先产出第一个可验收成果。批量高风险操作需要最小必要的预览、自动化和恢复能力。
 
 ---
 
@@ -549,6 +552,8 @@ Agent with Skill
 - 🌐 开发与生产环境漂移
 - 💾 高风险数据迁移
 - 🩹 Workaround 被要求包装成最终修复
+- 🧰 少量资产任务被工具建设拖走，正式成果长期为零
+- 🗂️ 高风险批量变换被误当作应当手工逐项完成
 
 架构演进候选评测另外覆盖：
 
@@ -849,7 +854,7 @@ Silvite Engineering Method：
 
 ## 🧭 当前状态
 
-### `v0.3.0 — Usable, Experimental`
+### `v0.3.1 — Usable, Experimental`
 
 当前版本已经完成：
 

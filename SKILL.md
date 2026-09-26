@@ -21,6 +21,18 @@ description: Use when planning or executing non-trivial software work with multi
 
 复杂任务按 [engineering-principles.md](references/engineering-principles.md) 建立任务合同；陌生系统先读 [system-thinking.md](references/system-thinking.md)。
 
+## Direct Execution Before Tooling
+
+**Do the work before building tooling for the work.** 对一次性、小规模、低风险且可直接完成的任务，默认直接产出用户要的结果。存在重复步骤、可以写脚本或可以抽象成框架，都不是先造工具的理由。本规则约束新建基础设施，不妨碍直接使用现有工具。
+
+开始写新的脚本、CLI、批处理器、pipeline、registry 或辅助框架前，快速比较：直接完成当前交付物的成本，与设计、实现、调试、验证和维护工具的成本；只计算有明确依据的复用。如果直接执行更简单、更快且足够可靠，就直接执行。少量文件修改、视觉资产逐项处理、单次 QA 与格式转换都允许这样做。
+
+只有当前规模已使直接执行明显昂贵、流程确定会反复使用、人工一致性难保证、批量操作风险较高、任务要求可重复审计，或用户明确要求工具时，才优先自动化。此时只建设完成本轮任务所需的最小工具，不为假想需求扩成通用平台。高风险删除、迁移、覆盖和大规模重命名仍须满足预览、验证与恢复门禁。
+
+**ZERO-DELIVERABLE WARNING：** 若脚本、登记表、检查点或 QA 文档持续增加，而本阶段正式交付物仍为零，立即停止工具扩张。重新核对用户等待的成果，选择能产生第一个正式成果的最小步骤并执行；若该步骤确被缺失条件阻断，报告具体阻断证据。辅助基础设施不得计作核心交付物。
+
+发现自己为少量工作搭建批处理框架、为几个视觉状态创建分析管线，或为一次验证编写通用平台时，视为 **Tooling Detour**：返回原始任务。最终验收先看交付物及其质量，再看工具是否有独立价值。
+
 ## Agent 权限与边界
 
 - 诊断默认只读，权限只提升到完成当前步骤所需的最小集合。
