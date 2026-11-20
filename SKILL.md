@@ -38,6 +38,7 @@ description: Use when planning or executing non-trivial software work with multi
 - 诊断默认只读，权限只提升到完成当前步骤所需的最小集合。
 - 不自行扩大目标、改无关代码、清理用户改动或改变兼容承诺。
 - 写入前建立可识别基线。脏工作树必须有不覆盖原改动的隔离或可恢复快照；否则停止写入。
+- 搬运、复制、归档或交付现有资产时，原样保留文件名、编号前缀与目录结构；严禁以“更整洁/更好认”为由擅自改名、改格式或附带多余软件安装。
 - 高风险动作采用“检查 → 预览 → 执行 → 验证”，并在执行前验证回滚路径。
 - 破坏性、生产、凭据、隐私或外部副作用遵循更严格的宿主规则和人工授权。
 
@@ -70,5 +71,6 @@ description: Use when planning or executing non-trivial software work with multi
 - 用重试、重启、吞异常或补丁掩盖根因并宣布修复。
 - 没有日志和状态语义就增加自动控制。
 - 以 Agent 的完成声明、历史通过率或局部测试代替当前证据。
+- 搬运交付文件时擅自“优化”去掉原前缀身份，仅核对字节哈希一致即宣布交付成功。
 
 完整清单见 [anti-patterns.md](references/anti-patterns.md)。项目暴露知识缺口时，按 [project-driven-learning.md](references/project-driven-learning.md) 定向补齐。

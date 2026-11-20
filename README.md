@@ -14,7 +14,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 *写得快之前，先让它知道：改哪里、不能碰哪里、怎么留退路、什么才叫真正完成。*
 
-![Version](https://img.shields.io/badge/version-v0.3.2_Experimental-blue?style=flat-square)
+![Version](https://img.shields.io/badge/version-v0.3.3_Experimental-blue?style=flat-square)
 ![Guardrails](https://img.shields.io/badge/guardrails-3_Core_Skills-emerald?style=flat-square)
 ![License](https://img.shields.io/badge/license-MIT-lightgrey?style=flat-square)
 
@@ -125,13 +125,13 @@ cp -R silvite-environment-engineering ~/.agents/skills/
 
 仓库使用 **Control（无 Skill）vs Treatment（加载 Skill）** 的压力场景做对比，看 AI 的**实际决策**有没有变好，而不只是嘴上说得好听。几个典型考题示例：
 
-- **基础护栏**：在脏工作树里改跨模块代码 / 时间紧迫时要求跳过回滚预留 / 小任务写一堆辅助脚本迟迟不交正经结果
+- **基础护栏**：在脏工作树里改跨模块代码 / 搬运交付文件擅自“善意”改名并只验字节哈希 / 小任务写一堆辅助脚本迟迟不交正经结果
 - **大型重构护栏**：版本号不变只升 Build 导致旧版用户更新不到 / 借“只读测试”之名接触密钥与下载可执行文件
 - **环境治理护栏**：克隆环境在删旧前表面跑通但实际仍回指旧路径 / 宿主机 `PATH` 被空壳或子环境库劫持 / 提权受阻时尝试绕过边界
 
 > [!NOTE]
-> **当前版本状态：`v0.3.2 — Usable, Experimental`**
-> - **基础安全护栏（14 场景）**：已完成一轮 RED → GREEN 行为校准（见 [`evals/results-v0.1.md`](evals/results-v0.1.md)）；
+> **当前版本状态：`v0.3.3 — Usable, Experimental`**
+> - **基础安全护栏（15 场景）**：前 14 个早期场景已完成一轮 RED → GREEN 行为校准（见 [`evals/results-v0.1.md`](evals/results-v0.1.md)），新增场景 `E15` 待独立前向验证；
 > - **大型重构（8 场景）与环境治理（12 场景）**：规则与考题已由真实工程失败经验抽象定稿，但尚未在独立隔离上下文中跑完 Control/Treatment 前向实测，目前**诚实标记为 `Unverified`**（详见 [`evals/README.md`](evals/README.md)）。
 
 ### 🔐 Public by Design（公开安全底线）
