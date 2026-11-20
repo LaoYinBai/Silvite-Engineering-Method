@@ -14,6 +14,7 @@
 ### Changed
 
 - 将 `silvite-environment-engineering` 从“仅限 Linux 分层环境”扩展为“跨平台宿主机底座与分层/隔离开发环境治理（Linux / Windows / macOS）”，并同步更新通用 `SKILL.md` 路由与 `README.md` 说明。
+- 对三大核心护栏（基础安全护栏、大型重构安全护栏、环境治理安全护栏）进行跨 Skill 与文件内部去重瘦身，收紧重叠规则，主文件与 `README.md` 仅保留核心代表性反模式与评测示例。
 
 ### Validation
 
