@@ -6,7 +6,7 @@
 - **REVIEW NEEDED**：公开性无法由现有信息判断，必须由维护者确认；存在此状态时不得发布。
 - **REMOVED**：已从公开内容删除，仅记录类别，不复述敏感事实。
 
-## v0.3.1 文件状态
+## v0.3.2 文件状态
 
 | 文件或目录 | 状态 | 说明 |
 |---|---|---|
@@ -22,8 +22,8 @@
 | `silvite-architecture-evolution/agents/openai.yaml` | SAFE | 只包含名称、简述和默认调用提示。 |
 | `silvite-architecture-evolution/references/` | SAFE | 使用通用版本、平台、edition、工具链和安全边界，不含项目专有参数。 |
 | `evals/architecture-evolution-*` | SAFE | 合成压力场景不含真实仓库、服务、凭据或内部项目名称；未运行结果明确标记 Unverified。 |
-| `silvite-environment-engineering/` | SAFE | 只包含通用环境拓扑、生命周期、能力状态、证据和恢复门禁；未保留设备或账户路径。 |
-| `evals/environment-engineering-*` | SAFE | 场景由现场失败去实例化生成；不含真实设备、产品、用户或私有文件名，结果标记 Unverified。 |
+| `silvite-environment-engineering/` | SAFE | 包含跨平台宿主机与分层/隔离环境拓扑、生命周期、能力状态、整理迁移门禁、证据与恢复门禁；未保留个人设备路径、用户名或具体项目工具名。 |
+| `evals/environment-engineering-*` | SAFE | 场景由现场失败与环境治理实践去实例化生成；不含真实设备、产品、用户或私有文件名，结果标记 Unverified。 |
 | `docs/superpowers/` | SAFE | 设计与实施计划只记录公开方法、文件结构、验证和发布步骤。 |
 | License | SAFE | 远端仓库维护者已选择并提交 MIT License；公开内容保持一致。 |
 

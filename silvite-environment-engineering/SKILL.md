@@ -1,6 +1,6 @@
 ---
 name: silvite-environment-engineering
-description: Use when diagnosing, provisioning, recovering, or validating layered Linux development environments where shells, containers, virtual machines, remote sessions, package managers, launchers, configuration files, or generated reports may belong to different lifecycles or execution layers.
+description: Use when diagnosing, provisioning, cleaning up, isolating, relocating, decommissioning, recovering, or validating layered or host-isolated development environments across Linux, Windows, or macOS where shells, containers, virtual machines, remote sessions, PATH, package/runtime managers, launchers, configuration files, or generated reports may belong to different lifecycles or execution layers.
 ---
 
 # Silvite Environment Engineering
@@ -9,17 +9,17 @@ description: Use when diagnosing, provisioning, recovering, or validating layere
 
 环境工程的完成状态由目标层上的真实能力、冷/新生命周期和可恢复证据决定，不由包已安装、文件存在、当前会话可用或报告写着 PASS 决定。
 
-**REQUIRED BACKGROUND:** 同时使用 `silvite-engineering-method`。它负责通用目标、范围、权限和可逆性；本 Skill 只增加 Linux 与分层开发环境的专用门禁。
+**REQUIRED BACKGROUND:** 同时使用 `silvite-engineering-method`。它负责通用目标、范围、权限和可逆性；本 Skill 只增加分层与宿主机/隔离开发环境的专用门禁。
 
 ## 何时使用
 
-适用于 Linux 主机、容器、VM、WSL、Proot、远程 Shell、桌面会话或类似多层环境中的：
+适用于跨平台宿主机（Linux、Windows、macOS）及容器、VM、WSL、Proot、远程 Shell、桌面会话、多运行时管理器（如 Conda/venv/uv/npm/系统包管）中的：
 
-- 开发环境初始化、修复、迁移或重装；
-- 启停入口、Shell 配置、PATH、包与命令能力异常；
+- 开发环境初始化、整理、隔离、迁移、重装或彻底退场；
+- 启停入口、Shell 配置、`PATH` 污染/空壳劫持、多包管理器混装冲突与命令能力异常；
 - “当前可用但重启失效”、warm path 通过而 cold path 失败；
 - 备份、恢复、诊断包、基线或验收报告；
-- 声称已安装、已加载、可执行、可连接或已恢复，但证据层级不清。
+- 声称已安装、已加载、可执行、可连接、已清理或已恢复，但证据层级不清。
 
 单仓代码修改且不涉及运行环境生命周期时，只使用通用 Skill。多阶段底层架构迁移同时使用 `silvite-architecture-evolution`。
 
@@ -119,6 +119,18 @@ Environment Contract
 
 诊断包只能声明已检查的敏感面。进程命令行、路径、网络配置和工具输出都可能泄露信息；未经内容审查不得声称“自动脱敏、可以安全分享”。
 
+### 7. 环境整理、隔离、迁移与退场门禁
+
+整理、隔离、清理或迁移宿主机与隔离运行时时，先只读盘点现状并向用户对齐方案，消费关系未清零前禁止删除或移动。详细检查见 [runtime-isolation-and-relocation.md](references/runtime-isolation-and-relocation.md)：
+
+- **宿主机底座极简与防反向污染**：宿主机全局 `PATH` 与管理器 `base` 只留全机刚需底座；业务进独立隔离环境；禁止子环境动态库、`bin`/`Scripts` 或捆绑私有子链留在全局 `PATH`；消除 OS 空壳（stub）与重复项抢占。
+- **消费者与硬链接审计**：删除或清理前扫描后台进程、服务、配置引用与硬链接，保护仍有活跃消费者的运行时；清理缓存前用 `--dry-run` 区分纯缓存与硬链接共享包。
+- **禁止直接剪切与“旧路径幽灵存活”门禁**：含绝对路径绑定（启动器/wrapper、shebang、`pyvenv.cfg`、元数据、Shell init）的环境严禁直接移动目录。必须按“备份前态 → 重定位默认配置 → 新位置克隆/重建 → 扫描并重绑入口内残余旧前缀与过期前缀 → 验证新环境独立可用 → 删旧并复验”执行。未完成旧前缀零残留审计前禁止删旧。
+- **混装清理与防误装护栏**：在混用过主/二级包管理器的环境批量卸载后，立即运行主管理器自检与二级依赖校验，补回被覆盖拆掉的共享底座依赖；保留全局防误装护栏时，以环境级作用域放行合法隔离环境。
+- **全持久化面退场**：彻底卸载必须清零包管记录、磁盘目录、环境变量、Shell Profile、OS 注册表/启动项/计划任务/后台服务，并在新开多种 Shell 验证 `NOT_FOUND`。
+- **权限受阻安全降级**：系统级清理遇权限不足或提权受阻时，严禁绕过；停止该层写入、保留原始备份、如实标为受阻，并可交付带数量校验与核心路径断言的可审阅脚本。
+- **剥离继承态冷验证**：涉及 `PATH`/环境变量/激活配置改动后，必须清空当前进程继承的激活变量、从持久化存储重载配置，并在用户全部常用壳层（如 PowerShell + CMD，或 bash + zsh）中实测首命中解析顺序、默认环境状态、子环境切换与真实执行。
+
 ## 证据状态
 
 ```text
@@ -141,6 +153,10 @@ Inventoried
 | 包存在就宣布功能可用 | 分别验证包、二进制、加载状态和真实操作 |
 | `source` 后成功就宣布持久 | 用新会话；涉及启动链时再用真正 cold start |
 | 当前已有进程就称启动脚本已验证 | 清理 warm state，从公开入口重放完整生命周期 |
+| 只在当前热进程测 `PATH`/激活结果 | 剥离继承激活变量并重载持久化配置，在所有目标壳层冷启验证 |
+| 直接剪切或未扫描旧前缀就删旧克隆源 | 先备份重定位并克隆，清零启动器/shebang 旧前缀引用后再删旧复验 |
+| 混装环境卸载二级包后直接宣布完成 | 立即运行主管理器自检与二级依赖检查，补回被拆掉的共享底座依赖 |
+| 删主目录或 `uninstall` 就宣称彻底退场 | 逐面清零包管、目录、环境变量、Profile、注册表/任务/服务并验证 `NOT_FOUND` |
 | 看到 PASS 报告就接受 | 核对工件版本、全程输出、退出码、计数和断言 |
 | 把“新增 3 个”写成“总共 3 个” | 分别定义全集、增量集与当前阶段集，再从文件系统计数 |
 | 验收表引用不存在的文件 | 对全部引用执行存在性、类型、版本与 hash 对应检查 |
@@ -150,4 +166,4 @@ Inventoried
 
 ## 停止条件
 
-出现以下任一情况，停止写入并准确报告：目标层仍不明确；必须修改未授权层；没有可恢复基线；校验和失败；归档成员不安全；测试器提前退出；报告与当前工件不一致；冷生命周期或恢复演练无法执行但又是完成条件。
+出现以下任一情况，停止写入并准确报告：目标层仍不明确；必须修改未授权层或提权受阻（停止该层写入，保留前态备份并可交付带断言的审阅脚本，严禁绕过）；没有可恢复基线；未盘点活跃消费者或未清零克隆体旧前缀引用；校验和失败；归档成员不安全；测试器提前退出；报告与当前工件不一致；冷生命周期或恢复演练无法执行但又是完成条件。

@@ -1,4 +1,4 @@
 interface:
   display_name: "Silvite Environment Engineering"
-  short_description: "Validate layered Linux environments and recovery"
-  default_prompt: "Use $silvite-environment-engineering to diagnose and validate this layered development environment with lifecycle-matched evidence."
+  short_description: "Govern layered and isolated dev environments, cleanup, and recovery"
+  default_prompt: "Use $silvite-environment-engineering to diagnose, isolate, clean up, relocate, or validate this layered development environment with lifecycle-matched evidence."

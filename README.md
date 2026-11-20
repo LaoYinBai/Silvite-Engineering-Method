@@ -14,7 +14,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 - `silvite-engineering-method`：通用工程治理，负责目标、范围、权限、可逆性、复杂度和证据。
 - `silvite-architecture-evolution`：大型架构演进，负责冻结基线、行为不变量、迁移切片、兼容窗口和发布门禁。
-- `silvite-environment-engineering`：Linux 与分层开发环境工程，负责环境拓扑、生命周期、能力状态、冷启动和恢复证据。
+- `silvite-environment-engineering`：跨平台宿主机底座与分层/隔离开发环境工程，负责环境拓扑、生命周期、能力状态、整理迁移退场门禁、冷启动和恢复证据。
 
 它不教 Agent 某一种语言，也不规定某一种架构。
 
@@ -38,7 +38,7 @@ ai-agents, agentic-coding, codex, software-engineering, engineering-methodology,
 
 **边界、判断、证据与可逆性。**
 
-大型重构使用通用 Skill 与架构演进 Skill；分层 Linux / 开发环境任务使用通用 Skill 与环境工程 Skill。互补 Skill 不替代通用治理，也不把所有日常修改升级成重型流程。
+大型重构使用通用 Skill 与架构演进 Skill；宿主机底座整理、运行时隔离迁移或分层环境任务使用通用 Skill 与环境工程 Skill。互补 Skill 不替代通用治理，也不把所有日常修改升级成重型流程。
 
 ---
 
@@ -576,6 +576,10 @@ Agent with Skill
 - 校验和失败后仍继续恢复
 - “新增数量”被错误解释为“总数”
 - 报告引用、hash、入口与受测工件不是同一版本
+- 克隆环境未重绑入口旧前缀，在删旧前产生“幽灵存活”假通过
+- 混装环境批量卸载破坏主管理器共享底座，或全局防误装护栏误拦子环境
+- 宿主机 `PATH` 被子环境动态库/OS 空壳抢占，或未盘点活跃消费者与硬链接直接盲删
+- 表面卸载未清零跨持久化面残留，或系统级提权受阻后试图绕过边界
 
 早期 Eval 曾经出现过一个很重要的结果：
 
@@ -642,13 +646,13 @@ cp -R silvite-environment-engineering ~/.agents/skills/
 再按依赖顺序逐切片迁移，并分别报告代码、测试、产物、发布和升级状态。
 ```
 
-Linux / 开发环境工程可以这样调用：
+跨平台宿主机 / 分层与隔离环境工程可以这样调用：
 
 ```text
 同时使用 $silvite-engineering-method 和 $silvite-environment-engineering。
 
-先识别执行层、配置归属与生命周期，再用当前 artifact、真实入口、
-新会话或 cold path 以及恢复演练建立可重建证据。
+先只读盘点执行层、活跃消费者、配置归属与生命周期，再用真实入口、
+脱钩扫描、剥离继承态的跨壳层 cold path 以及恢复演练建立可重建证据。
 ```
 
 支持自动 Skill Discovery 的 Agent，也可以根据 `SKILL.md` 中的描述自动触发。
@@ -698,7 +702,8 @@ Silvite-Engineering-Method/
 │   └── references/
 │       ├── topology-and-lifecycle.md
 │       ├── capability-and-state.md
-│       └── evidence-and-recovery.md
+│       ├── evidence-and-recovery.md
+│       └── runtime-isolation-and-relocation.md
 │
 └── evals/
     ├── README.md
@@ -733,7 +738,7 @@ Silvite-Engineering-Method/
 
 ### `silvite-environment-engineering/`
 
-独立可安装的互补 Skill。处理分层运行环境、Shell/包能力、冷生命周期、证据生成器与备份恢复，不把单一设备路径或项目脚本写成普遍规则。
+独立可安装的互补 Skill。处理跨平台宿主机底座与分层/隔离运行环境、Shell/`PATH`/包能力、整理迁移与退场门禁、冷生命周期、证据生成器与备份恢复，不把单一设备路径或特定目录布局写成普遍规则。
 
 ### `evals/`
 
@@ -854,7 +859,7 @@ Silvite Engineering Method：
 
 ## 🧭 当前状态
 
-### `v0.3.1 — Usable, Experimental`
+### `v0.3.2 — Usable, Experimental`
 
 当前版本已经完成：
 
@@ -868,8 +873,8 @@ Silvite Engineering Method：
 - ✅ 大型迁移的基线、不变量、切片和兼容门禁
 - ✅ 发布身份、信息暴露、密闭工具链和命令行为安全规则
 - ✅ 8 个架构演进压力场景与评分标准
-- ✅ 分层环境拓扑、能力状态、可重建验收和备份恢复门禁
-- ✅ 8 个环境工程压力场景与评分标准
+- ✅ 分层与宿主机隔离环境拓扑、能力状态、整理迁移退场门禁、可重建验收与备份恢复门禁
+- ✅ 12 个环境工程压力场景与评分标准（含幽灵存活、混装清理、PATH 污染与提权降级）
 
 但它仍然缺少足够多的：
 

@@ -2,6 +2,28 @@
 
 版本遵循阶段性规则：`v0.x` 表示方法仍在快速变化；`v1.0` 需要经过多个真实项目、长期维护和反例检验后再确定。
 
+## [0.3.2] - 2026-11-20
+
+### Added
+
+- 在 `silvite-environment-engineering` 新增环境整理、隔离、迁移与退场约束规则，并拆出参考文档 `references/runtime-isolation-and-relocation.md`。
+- 增加宿主机底座极简与防反向污染、活跃消费者与硬链接 `--dry-run` 审计、禁止直接剪切搬迁与“旧路径幽灵存活（Ghost-Dependency）”扫描重绑门禁。
+- 增加混装环境清理双向自检与环境级防误装作用域放行、跨持久化面彻底退场、系统提权受阻时的带断言降级交付，以及剥离继承态的跨壳层冷启动验收。
+- 在 `evals/environment-engineering-scenarios.md` 新增 `EE09`–`EE12` 四个环境整理压力场景，并更新 `evals/environment-engineering-results-v0.3.md` 状态台账。
+
+### Changed
+
+- 将 `silvite-environment-engineering` 从“仅限 Linux 分层环境”扩展为“跨平台宿主机底座与分层/隔离开发环境治理（Linux / Windows / macOS）”，并同步更新通用 `SKILL.md` 路由与 `README.md` 说明。
+
+### Validation
+
+- 对仓库各 Skill 引用关系、Markdown 结构及新增内容执行公开安全脱敏复核，确认无个人路径、用户名或专有工具名漏入。
+- 新增场景 `EE09`–`EE12` 与现有 `EE01`–`EE08` 尚未运行独立 Agent 的 RED/GREEN 前向测试，行为状态保持 `Unverified`。
+
+### Safety
+
+- 仅沉淀面向 Agent 环境整理行为的通用约束规则，不收录任何个人机器目录布局、特定盘符路径或私有工具链名称。
+
 ## [0.3.1] - 2026-09-26
 
 ### Changed
